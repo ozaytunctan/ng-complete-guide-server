@@ -6,7 +6,8 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ozaytunctan.helper.ServiceResult;
+import com.ozaytunctan.dto.ServiceResult;
+import com.ozaytunctan.exceptions.BusinessException;
 import com.ozaytunctan.helper.enums.ServiceResultType;
 import com.ozaytunctan.model.Recipe;
 import com.ozaytunctan.repository.RecipeRepository;
@@ -22,8 +23,9 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public ServiceResult<List<Recipe>> saveRecipes(List<Recipe> recipes) {
-
-		if (Objects.nonNull(recipes) && !recipes.isEmpty()) {
+		if (Objects.isNull(recipes) || recipes.isEmpty())
+			throw new BusinessException("message.error");
+		else {
 			List<Recipe> addRecipeList = this.recipeRepository.saveAll(recipes);
 			result = new ServiceResult<>(addRecipeList, ServiceResultType.SUCCESS);
 		}

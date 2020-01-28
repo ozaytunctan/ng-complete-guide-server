@@ -1,7 +1,9 @@
 package com.ozaytunctan.config;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
@@ -25,17 +27,44 @@ public class CustomConfiguration {
 
 	@Bean
 	public FilterRegistrationBean<CorsFilter> corsFilter() {
+		
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		
 		final CorsConfiguration config = new CorsConfiguration();
+
 		config.setAllowCredentials(true);
 		config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
 		config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Auth"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
 		source.registerCorsConfiguration("/**", config);
-		FilterRegistrationBean<CorsFilter> registration 
-		= new FilterRegistrationBean<CorsFilter>(
+		FilterRegistrationBean<CorsFilter> registration = new FilterRegistrationBean<CorsFilter>(
 				new CorsFilter(source));
 		return registration;
 	}
 
+	@Bean(name = "ddMMyyyy")
+	public String ddMMyyyy() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
+		return simpleDateFormat.format(new Date());
+	}
+	
+	@Bean(name = "HH:mm:ss")
+	public String hourFormat() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+		return simpleDateFormat.format(new Date());
+	}
+
+	@Bean(name = "HHmmss")
+	public String formatterMinuteHour() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HHmmss");
+		return simpleDateFormat.format(new Date());
+	}
+
+	@Bean(name = "ddMMyyyyHHmmss")
+	public String formatNowDate() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+		return simpleDateFormat.format(new Date());
+	}
+	
+	
 }

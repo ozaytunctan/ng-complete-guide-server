@@ -3,7 +3,6 @@ package com.ozaytunctan.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ozaytunctan.helper.ApiResponse;
-import com.ozaytunctan.helper.LanguageHelper;
-import com.ozaytunctan.helper.ServiceResult;
+import com.ozaytunctan.dto.ApiResponse;
+import com.ozaytunctan.dto.ServiceResult;
+import com.ozaytunctan.helper.FactoryUtil;
 import com.ozaytunctan.model.Recipe;
+import com.ozaytunctan.service.Messages;
 import com.ozaytunctan.service.spec.RecipeService;
 
 @RestController
@@ -26,10 +26,10 @@ public class RecipeController {
 	private RecipeService recipeService;
 
 	@Autowired
-	private MessageSource messageSource;
+	private Messages messages;
 
 	@Autowired
-	LanguageHelper languageHelper;
+	FactoryUtil languageHelper;
 
 	@GetMapping(path = { "/getRecipes", "/yemek-tarifi-listesi" })
 	public ApiResponse<List<Recipe>> getRecipes(@PathVariable(name = "lang") String lang) {
@@ -41,24 +41,21 @@ public class RecipeController {
 
 		if (result.isSucess()) {
 			response.setResult(result.getData());
-			
-			response.setMessage(messageSource.getMessage("message.success", 
-					            null, 
-					            LocaleContextHolder.getLocale()));
-			
+			response.setMessage(messages.get("message.success"));
 			response.setCode(result.getResult().name());
 		} else {
-			response.setMessage(messageSource.getMessage("message.error",
-					            null, 
-					            LocaleContextHolder.getLocale()));
+			response.setMessage(messages.get("message.error"));
 			response.setMessage(result.getMessage());
 		}
 		return response;
 	}
 
 	@PostMapping(path = "/saveRecipes")
-	public ApiResponse<List<Recipe>> saveRecipe(@RequestBody List<Recipe> recipes) {
-
+	public ApiResponse<List<Recipe>> saveRecipe(
+			@PathVariable(name = "lang") String lang,
+			@RequestBody List<Recipe> recipes) {
+		
+		languageHelper.setLocale(lang);
 		ServiceResult<List<Recipe>> result = this.recipeService.saveRecipes(recipes);
 
 		ApiResponse<List<Recipe>> response = new ApiResponse<>();

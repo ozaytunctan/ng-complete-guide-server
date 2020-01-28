@@ -1,4 +1,4 @@
-package com.ozaytunctan.helper;
+package com.ozaytunctan.dto;
 
 import java.util.Objects;
 

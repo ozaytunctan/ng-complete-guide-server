@@ -2,7 +2,7 @@ package com.ozaytunctan.service.spec;
 
 import java.util.List;
 
-import com.ozaytunctan.helper.ServiceResult;
+import com.ozaytunctan.dto.ServiceResult;
 import com.ozaytunctan.model.Recipe;
 
 public interface RecipeService {

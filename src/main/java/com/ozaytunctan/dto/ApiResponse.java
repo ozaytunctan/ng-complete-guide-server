@@ -1,4 +1,4 @@
-package com.ozaytunctan.helper;
+package com.ozaytunctan.dto;
 
 public class ApiResponse<D> {
 	

@@ -48,23 +48,23 @@ public class CustomConfiguration {
 		return simpleDateFormat.format(new Date());
 	}
 	
-	@Bean(name = "HH:mm:ss")
-	public String hourFormat() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-		return simpleDateFormat.format(new Date());
-	}
-
-	@Bean(name = "HHmmss")
-	public String formatterMinuteHour() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HHmmss");
-		return simpleDateFormat.format(new Date());
-	}
-
-	@Bean(name = "ddMMyyyyHHmmss")
-	public String formatNowDate() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-		return simpleDateFormat.format(new Date());
-	}
-	
+//	@Bean(name = "HH:mm:ss")
+//	public String hourFormat() {
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+//		return simpleDateFormat.format(new Date());
+//	}
+//
+//	@Bean(name = "HHmmss")
+//	public String formatterMinuteHour() {
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HHmmss");
+//		return simpleDateFormat.format(new Date());
+//	}
+//
+//	@Bean(name = "ddMMyyyyHHmmss")
+//	public String formatNowDate() {
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+//		return simpleDateFormat.format(new Date());
+//	}
+//	
 	
 }

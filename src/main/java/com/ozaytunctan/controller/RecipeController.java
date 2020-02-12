@@ -51,10 +51,9 @@ public class RecipeController {
 	}
 
 	@PostMapping(path = "/saveRecipes")
-	public ApiResponse<List<Recipe>> saveRecipe(
-			@PathVariable(name = "lang") String lang,
+	public ApiResponse<List<Recipe>> saveRecipe(@PathVariable(name = "lang") String lang,
 			@RequestBody List<Recipe> recipes) {
-		
+
 		languageHelper.setLocale(lang);
 		ServiceResult<List<Recipe>> result = this.recipeService.saveRecipes(recipes);
 
@@ -62,13 +61,11 @@ public class RecipeController {
 
 		if (result.isSucess()) {
 			response.setResult(result.getData());
-			response.setMessage("İşlem Başarılı");
+			response.setMessage(messages.get("message.success"));
 			response.setCode(result.getResult().name());
 		} else {
-			response.setError("İşlem Başarısız");
-			response.setMessage(result.getMessage());
+			response.setMessage(messages.get("message.error"));
 		}
-
 		return response;
 	}
 

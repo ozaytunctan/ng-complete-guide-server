@@ -9,11 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class FactoryUtil {
 
-	public void setLocale(String lang) {
-		LocaleContextHolder.setLocale(
-				Locale.forLanguageTag(lang.concat("-").concat(lang.toUpperCase())));
-	}
-
 	public Locale[] getLocales() {
 		Locale[] locales = new Locale[10];
 		return locales;
@@ -23,6 +18,5 @@ public class FactoryUtil {
 		Currency currency = Currency.getInstance(LocaleContextHolder.getLocale());
 		return currency;
 	}
-	 
 
 }

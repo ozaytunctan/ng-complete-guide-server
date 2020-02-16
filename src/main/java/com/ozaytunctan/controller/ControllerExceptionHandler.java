@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.ozaytunctan.dto.ApiResponse;
 import com.ozaytunctan.exceptions.BusinessException;
-import com.ozaytunctan.service.Messages;
+import com.ozaytunctan.service.MessagesImpl;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
 	@Autowired
-	private Messages messages;
+	private MessagesImpl messages;
 
 	@ExceptionHandler(value = { NullPointerException.class })
 	public ResponseEntity<ApiResponse<String>> exceptionHandler(NullPointerException exception) {

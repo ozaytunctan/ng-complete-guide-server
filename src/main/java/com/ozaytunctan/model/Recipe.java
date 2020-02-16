@@ -1,6 +1,8 @@
 package com.ozaytunctan.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -58,6 +60,15 @@ public class Recipe extends BaseEntity<Integer> {
 	 */
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public void addIngredient(Ingredient ingredient) {
+		if (this.ingredients == null)
+			this.ingredients = new ArrayList<Ingredient>();
+
+		ingredient.setRecipe(this);
+		this.ingredients.add(ingredient);
+
 	}
 
 }

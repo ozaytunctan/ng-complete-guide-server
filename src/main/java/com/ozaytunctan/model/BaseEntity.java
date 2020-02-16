@@ -16,7 +16,7 @@ public abstract class BaseEntity<ID> {
 	private ID id;
 	
 	@Column(name="cretedDate")
-	private Date createdDate;
+	private Date createdDate=new Date();
 	
 	
 	public BaseEntity(ID id) {
@@ -24,33 +24,36 @@ public abstract class BaseEntity<ID> {
 	}
 
 
-
-
-
+	/**
+	 * @return the id
+	 */
 	public ID getId() {
 		return id;
 	}
 
 
-
-
-
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(ID id) {
 		this.id = id;
 	}
 
 
-
-
-
+	/**
+	 * @return the createdDate
+	 */
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 
 
+	/**
+	 * @param createdDate the createdDate to set
+	 */
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	
 
+    
 }

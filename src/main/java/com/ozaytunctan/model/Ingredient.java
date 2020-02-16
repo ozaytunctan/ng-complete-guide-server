@@ -16,12 +16,12 @@ import com.ozaytunctan.helper.enums.ConversionType;
 /**
  * Yemek Malzeme
  * 
- * @author ubuntudev
+ * @author ozaytunctan
  *
  */
 @Entity
 @Table
-@SequenceGenerator(sequenceName = "sq_ingredient", initialValue = 1, allocationSize = 1, name = "idGenerator")
+@SequenceGenerator(sequenceName = "sq_ingredient",initialValue=1, name = "idGenerator")
 public class Ingredient extends BaseEntity<Long> {
 
 	private String name;
@@ -83,6 +83,20 @@ public class Ingredient extends BaseEntity<Long> {
 
 	public void setConversionType(ConversionType conversionType) {
 		this.conversionType = conversionType;
+	}
+
+	/**
+	 * @return the recipe
+	 */
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	/**
+	 * @param recipe the recipe to set
+	 */
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 
 }

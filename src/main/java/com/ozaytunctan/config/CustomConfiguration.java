@@ -4,11 +4,19 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 
+import javax.annotation.PostConstruct;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration.AccessLevel;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -16,6 +24,11 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class CustomConfiguration {
+
+	@PostConstruct
+	public void init() {
+		LocaleContextHolder.setLocale(Locale.forLanguageTag("tr"));
+	}
 
 	@Bean
 	public MessageSource messageSource() {
@@ -27,9 +40,9 @@ public class CustomConfiguration {
 
 	@Bean
 	public FilterRegistrationBean<CorsFilter> corsFilter() {
-		
+
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		
+
 		final CorsConfiguration config = new CorsConfiguration();
 
 		config.setAllowCredentials(true);
@@ -42,29 +55,16 @@ public class CustomConfiguration {
 		return registration;
 	}
 
-	@Bean(name = "ddMMyyyy")
-	public String ddMMyyyy() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
-		return simpleDateFormat.format(new Date());
+	@Bean
+	public ModelMapper modelMapper() {
+		ModelMapper modelMapper = new ModelMapper();
+		org.modelmapper.config.Configuration config = modelMapper.getConfiguration();
+		config.setMatchingStrategy(MatchingStrategies.STANDARD);
+		config.setFieldAccessLevel(AccessLevel.PRIVATE);
+		config.setFieldMatchingEnabled(true);
+		config.setSkipNullEnabled(true);
+
+		return modelMapper;
 	}
-	
-//	@Bean(name = "HH:mm:ss")
-//	public String hourFormat() {
-//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-//		return simpleDateFormat.format(new Date());
-//	}
-//
-//	@Bean(name = "HHmmss")
-//	public String formatterMinuteHour() {
-//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HHmmss");
-//		return simpleDateFormat.format(new Date());
-//	}
-//
-//	@Bean(name = "ddMMyyyyHHmmss")
-//	public String formatNowDate() {
-//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-//		return simpleDateFormat.format(new Date());
-//	}
-//	
-	
+
 }

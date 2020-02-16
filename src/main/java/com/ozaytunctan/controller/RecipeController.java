@@ -1,40 +1,41 @@
+
 package com.ozaytunctan.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ozaytunctan.dto.ApiResponse;
+import com.ozaytunctan.dto.RecipeDto;
+import com.ozaytunctan.dto.RecipeSearchRequestDto;
 import com.ozaytunctan.dto.ServiceResult;
 import com.ozaytunctan.helper.FactoryUtil;
 import com.ozaytunctan.model.Recipe;
-import com.ozaytunctan.service.Messages;
+import com.ozaytunctan.service.MessagesImpl;
 import com.ozaytunctan.service.spec.RecipeService;
 
 @RestController
-@RequestMapping(path = "/rest/api/v1/{lang}")
+@RequestMapping(path = "/api/v1/recipe")
 public class RecipeController {
 
 	@Autowired
 	private RecipeService recipeService;
 
 	@Autowired
-	private Messages messages;
+	private MessagesImpl messages;
 
 	@Autowired
 	FactoryUtil languageHelper;
 
 	@GetMapping(path = { "/getRecipes", "/yemek-tarifi-listesi" })
-	public ApiResponse<List<Recipe>> getRecipes(@PathVariable(name = "lang") String lang) {
-		languageHelper.setLocale(lang);
-
+	public ApiResponse<List<Recipe>> getRecipes() {
 		ServiceResult<List<Recipe>> result = this.recipeService.getRecipes();
 
 		ApiResponse<List<Recipe>> response = new ApiResponse<>();
@@ -51,10 +52,7 @@ public class RecipeController {
 	}
 
 	@PostMapping(path = "/saveRecipes")
-	public ApiResponse<List<Recipe>> saveRecipe(@PathVariable(name = "lang") String lang,
-			@RequestBody List<Recipe> recipes) {
-
-		languageHelper.setLocale(lang);
+	public ApiResponse<List<Recipe>> saveRecipe(@RequestBody List<Recipe> recipes) {
 		ServiceResult<List<Recipe>> result = this.recipeService.saveRecipes(recipes);
 
 		ApiResponse<List<Recipe>> response = new ApiResponse<>();
@@ -67,6 +65,12 @@ public class RecipeController {
 			response.setMessage(messages.get("message.error"));
 		}
 		return response;
+	}
+
+	@PostMapping(path = "/searchRecipe")
+	public ApiResponse<List<RecipeDto>> saveRecipe(@Valid @RequestBody RecipeSearchRequestDto searhRecipe) {
+		ServiceResult<List<RecipeDto>> recipeDtos = this.recipeService.searchRecipe(searhRecipe);
+		return new ApiResponse<List<RecipeDto>>(recipeDtos.getData());
 	}
 
 }

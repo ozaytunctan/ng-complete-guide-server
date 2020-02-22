@@ -32,12 +32,17 @@ public class RecipeServiceImpl implements RecipeService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public ServiceResult<List<Recipe>> saveRecipes(List<Recipe> recipes) {
+	public ServiceResult<List<RecipeDto>> saveRecipes(List<RecipeDto> recipes) {
+		ServiceResult<List<RecipeDto>> result = new ServiceResult<>(null);
+
 		if (Objects.isNull(recipes) || recipes.isEmpty())
 			throw new BusinessException("message.error");
 		else {
-			List<Recipe> addRecipeList = this.recipeRepository.saveAll(recipes);
-			result = new ServiceResult<>(addRecipeList, ServiceResultType.SUCCESS);
+			List<Recipe> recipeList = this.modelMapper.map(recipes, new TypeReference<List<Recipe>>() {
+			}.getType());
+			List<Recipe> addRecipeList = this.recipeRepository.saveAll(recipeList);
+			result = new ServiceResult<>(this.modelMapper.map(addRecipeList, new TypeReference<List<RecipeDto>>() {
+			}.getType()), ServiceResultType.SUCCESS);
 		}
 		return result;
 	}

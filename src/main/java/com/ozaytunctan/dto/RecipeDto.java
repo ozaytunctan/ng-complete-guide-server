@@ -12,12 +12,29 @@ public class RecipeDto extends BaseDto<Integer> {
 
 	private List<IngredientDto> ingredients;
 
+	private UserDto user;
+
 	public RecipeDto(Integer id) {
 		super(id);
 	}
-	
+
 	public RecipeDto() {
 		super(0);
+	}
+
+	/**
+	 * @return the user
+	 */
+	public UserDto getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user
+	 *            the user to set
+	 */
+	public void setUser(UserDto user) {
+		this.user = user;
 	}
 
 	/**
@@ -28,7 +45,8 @@ public class RecipeDto extends BaseDto<Integer> {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -42,7 +60,8 @@ public class RecipeDto extends BaseDto<Integer> {
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -56,7 +75,8 @@ public class RecipeDto extends BaseDto<Integer> {
 	}
 
 	/**
-	 * @param imagePath the imagePath to set
+	 * @param imagePath
+	 *            the imagePath to set
 	 */
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
@@ -70,14 +90,11 @@ public class RecipeDto extends BaseDto<Integer> {
 	}
 
 	/**
-	 * @param ingredients the ingredients to set
+	 * @param ingredients
+	 *            the ingredients to set
 	 */
 	public void setIngredients(List<IngredientDto> ingredients) {
 		this.ingredients = ingredients;
 	}
-	
-	
 
-	
-	
 }

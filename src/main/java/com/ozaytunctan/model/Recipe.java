@@ -63,12 +63,26 @@ public class Recipe extends BaseEntity<Integer> {
 	}
 
 	public void addIngredient(Ingredient ingredient) {
-		if (this.ingredients == null)
-			this.ingredients = new ArrayList<Ingredient>();
+		if (this.getIngredients() == null)
+			this.setIngredients(new ArrayList<Ingredient>());
 
 		ingredient.setRecipe(this);
-		this.ingredients.add(ingredient);
+		this.getIngredients().add(ingredient);
 
+	}
+
+	/**
+	 * @return the ingredients
+	 */
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	/**
+	 * @param ingredients the ingredients to set
+	 */
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 
 }

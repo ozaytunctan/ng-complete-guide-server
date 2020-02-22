@@ -12,7 +12,9 @@ public class IngredientDto extends BaseDto<Long> {
 
 	private ConversionType conversionType;
 
-	private Integer recipeId;
+	private Long recipeId;
+
+	private UserDto user;
 
 	public IngredientDto(Long id) {
 		super(id);
@@ -85,16 +87,31 @@ public class IngredientDto extends BaseDto<Long> {
 	/**
 	 * @return the recipeId
 	 */
-	public Integer getRecipeId() {
+	public Long getRecipeId() {
 		return recipeId;
 	}
 
 	/**
-	 * @param recipeId the recipeId to set
+	 * @param recipeId
+	 *            the recipeId to set
 	 */
-	public void setRecipeId(Integer recipeId) {
+	public void setRecipeId(Long recipeId) {
 		this.recipeId = recipeId;
 	}
 
-	
+	/**
+	 * @return the user
+	 */
+	public UserDto getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user
+	 *            the user to set
+	 */
+	public void setUser(UserDto user) {
+		this.user = user;
+	}
+
 }

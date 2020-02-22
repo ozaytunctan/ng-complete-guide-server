@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.ozaytunctan.dto.ApiResponse;
 import com.ozaytunctan.dto.RecipeDto;
 import com.ozaytunctan.dto.RecipeSearchRequestDto;
@@ -33,6 +35,7 @@ public class RecipeController {
 
 	@Autowired
 	FactoryUtil languageHelper;
+	
 
 	@GetMapping(path = { "/getRecipes", "/yemek-tarifi-listesi" })
 	public ApiResponse<List<Recipe>> getRecipes() {
@@ -52,10 +55,10 @@ public class RecipeController {
 	}
 
 	@PostMapping(path = "/saveRecipes")
-	public ApiResponse<List<Recipe>> saveRecipe(@RequestBody List<Recipe> recipes) {
-		ServiceResult<List<Recipe>> result = this.recipeService.saveRecipes(recipes);
+	public ApiResponse<List<RecipeDto>> saveRecipe(@RequestBody List<RecipeDto> recipes) {
+		ServiceResult<List<RecipeDto>> result = this.recipeService.saveRecipes(recipes);
 
-		ApiResponse<List<Recipe>> response = new ApiResponse<>();
+		ApiResponse<List<RecipeDto>> response = new ApiResponse<>();
 
 		if (result.isSucess()) {
 			response.setResult(result.getData());
